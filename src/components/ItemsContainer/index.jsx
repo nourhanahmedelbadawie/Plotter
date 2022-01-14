@@ -1,11 +1,23 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const ItemsContainer = () => {
+import styles from "./ItemsContainer.module.scss";
+
+
+const ItemsContainer = ({dragRef , name}) => {
   return (
-    <div>
-      <p>ItemsContainer</p>
+    <div className={styles.wrapper} ref={dragRef}>
+      {name}
+      ff
     </div>
   );
 };
 
 export default ItemsContainer;
+
+ItemsContainer.propTypes = {
+  dragRef: PropTypes.object,
+  name: PropTypes.string,
+};
+
+
