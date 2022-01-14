@@ -1,0 +1,18 @@
+@import "./variables";
+
+// Reset
+* {
+    margin: 0px;
+    padding: 0px;
+  }
+  
+  // customize
+  
+  body {
+    background-color: $primary;
+  }
+
+  //colors
+  a{
+      color:$primary
+  }
