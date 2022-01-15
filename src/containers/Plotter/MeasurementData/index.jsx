@@ -1,21 +1,23 @@
-import { Button } from "@mui/material";
 import React from "react";
 
-import Columns from "../../../components/Columns";
-import ItemsContainer from "../../../components/ItemsContainer";
+import Measures from "../Measures";
+import Dimensions from "../Dimensions";
+import Column from "../Column";
+import { Grid } from "@mui/material";
 
 const MeasurementData = () => {
   return (
     <div>
-      <div id="measures">
-        <ItemsContainer dragRef={{ id: 1 }} ref="1" /> <Button>Clear</Button>
-      </div>
-      <div id="dimensions">
-        <ItemsContainer dragRef={{ id: 1 }} ref="" /> <Button>Clear</Button>
-      </div>
-      <div id="column">
-        <Columns />
-      </div>
+      <Grid container spacing={2}>
+      <Grid item xs={4}>
+          <Column />
+        </Grid>
+        <Grid item xs={8}>
+          <Measures />
+          <Dimensions />
+        </Grid>
+   
+      </Grid>
     </div>
   );
 };
