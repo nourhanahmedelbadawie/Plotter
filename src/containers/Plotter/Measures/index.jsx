@@ -1,39 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDrop } from "react-dnd";
-import ItemsContainer from "../../../components/ItemsContainer";
+import { useDispatch } from "react-redux";
 
+import { addMeasureItem } from "../../../store/actions";
+import ItemsContainer from "../../../components/ItemsContainer";
 import Items from "../Items";
 
 const Measures = () => {
-  const [basket, setBasket] = useState([]);
+  const dispatch = useDispatch();
+  const [measure, setmeasure] = useState([]);
+
+  useEffect(() => {
+    dispatch(addMeasureItem(measure));
+  }, [measure]);
+
   const [{ isOver }, dropRef] = useDrop({
     accept: "data",
     drop: (item) =>
-      setBasket((basket) => {
-        console.log(item);
-        return !basket.some((el) => el.id === item.id)
-          ? [...basket, item]
-          : [...basket];
+      setmeasure((measure) => {
+        return !measure?.some((el) => el.name === item.name) &&
+          item.function === "measure"
+          ? [...measure, item]
+          : [...measure];
       }),
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
   });
   const clearMeasures = () => {
-    setBasket([]);
+    setmeasure([]);
+    dispatch(clearMeasures())
+
   };
   const setMeasuresData = () => {
     return (
       <>
-        {basket.map((pet) => (
-          <Items id={pet.id} key={pet.id} name={pet.name} />
+        {measure.map((item, itemId) => (
+          <Items id={item.id} key={itemId} item={item} />
         ))}
-        {isOver && <p>You can drop here</p>}
+        {isOver && (
+          <p className="alert alert-info p-1" role="alert">
+            Drop measure only here
+          </p>
+        )}
       </>
     );
   };
   return (
-    <div className="basket" ref={dropRef}>
+    <div ref={dropRef}>
+      <h3> Measures</h3>
       <ItemsContainer
         dataItemsList={setMeasuresData()}
         onClear={clearMeasures}

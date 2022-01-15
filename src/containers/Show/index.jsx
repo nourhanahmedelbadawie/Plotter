@@ -1,18 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
-import Linktag from "../../components/Linktag";
 import { ROUTE_PATHS } from "../../utils/PathNames";
 
-const Home = () => {
+const Show = () => {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
           <Grid item xs={8}>
             <div className="d-flex">
-              <Linktag to={ROUTE_PATHS.plotter} text={"Show dialog"}></Linktag>
+              <Link to={ROUTE_PATHS.plotter}>Show dialog</Link>
             </div>
           </Grid>
         </Grid>
@@ -21,4 +21,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Show;

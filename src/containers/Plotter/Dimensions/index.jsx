@@ -1,41 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDrop } from "react-dnd";
+import { useDispatch } from "react-redux";
 
+import {addDimensionItem} from "../../../store/actions";
 import Items from "../Items";
 import ItemsContainer from "../../../components/ItemsContainer";
 
 const Dimensions = () => {
-  const [basket, setBasket] = useState([]);
+  const [dimension, setdimension] = useState([]);
+  const dispatch = useDispatch();
+
+
+  useEffect(()=>{
+   dispatch(addDimensionItem(dimension));
+
+  },[dimension])
 
   const [{ isOver }, dropRef] = useDrop({
     accept: "data",
-    drop: (item) =>
-      setBasket((basket) => {
-        console.log(basket);
-        return !basket.some((el) => el.id === item.id)
-          ? [...basket, item]
-          : [...basket];
-      }),
+    drop: (item) => {
+      setdimension((dimension) => {
+        return !dimension?.some((el) => el.name === item.name) &&
+          item.function === "dimension"
+          ? [...dimension, item]
+          : [...dimension];
+      });
+    },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
   });
 
+
   const clearDimensions = () => {
-    setBasket([]);
+    setdimension([]);
+    dispatch(clearDimensions())
   };
   const setDimensionsData = () => {
     return (
       <>
-        {basket.map((pet) => (
-          <Items id={pet.id} key={pet.id} name={pet.name} />
+        {dimension.map((item, itemId) => (
+          <Items id={item.id} key={itemId} item={item} />
         ))}
-        {isOver && <p>You can drop here</p>}
+        {isOver && (
+          <p className="alert alert-info p-1" role="alert">
+            Drop dimension only here
+          </p>
+        )}
       </>
     );
   };
   return (
-    <div className="basket" ref={dropRef}>
+    <div ref={dropRef}>
+      <h3> Dimensions</h3>
+
       <ItemsContainer
         dataItemsList={setDimensionsData()}
         onClear={clearDimensions}

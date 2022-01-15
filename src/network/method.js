@@ -1,27 +1,33 @@
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import * as apis from "./api";
 
-export function getColoumData() {
+export const getColoumData = async () => {
+  let response = null;
   try {
-    const response = apis.getColoumData();
-    console.log(response)
-    console.log(process.env.REACT_APP_API_BASE_URL)
+    response = await apis.getColoumData();
 
+    toast.success("An error occured", {
+      position: toast.POSITION.TOP_CENTER,
+    });
   } catch {
     toast.error("An error occured", {
       position: toast.POSITION.TOP_CENTER,
     });
   }
-}
+  return response;
+};
 
-export function setPlotterData() {
+export function setPlotterData(payload) {
+  let response = null;
+
   try {
-    const response = apis.postPlotterData();
+    response = apis.postPlotterData(payload);
   } catch {
     toast.error("An error occured", {
       position: toast.POSITION.TOP_CENTER,
     });
   }
+  return response;
 }

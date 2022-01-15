@@ -1,12 +1,12 @@
 @import "../../scss/variables";
 
-.wrapper{
-background-color: $light-blue;
-padding: $p-1;
-width: 100%;
-height: 100%;
-border-radius: $border-radius-mid;
-h4{
-    color:$primary
-}
+.wrapper {
+  background-color: $light-blue;
+  padding: $p-1;
+  width: 100%;
+  height: 100%;
+  border-radius: $border-radius-mid;
+  h4 {
+    color: $primary;
+  }
 }

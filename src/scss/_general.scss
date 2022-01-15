@@ -2,20 +2,21 @@
 
 // Reset
 * {
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
-  }
-  ul{
-    list-style: none;
-  }
-  // customize
-  
-  body {
-    background-color: $primary;
-  }
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+ul {
+  list-style: none;
+  padding: 0px;
+}
+// customize
 
-  //colors
-  a{
-      color:$primary
-  }
+body {
+  background-color: $primary;
+}
+
+//colors
+a {
+  color: $primary;
+}

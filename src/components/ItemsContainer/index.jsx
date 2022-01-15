@@ -6,12 +6,11 @@ import { Button } from "@mui/material";
 
 const ItemsContainer = ({ dataItemsList, onClear }) => {
   return (
-    <div className=" d-flex align-items-center justify-content-between" >
-      <div className={`${styles.wrapper} d-flex mb-2 mr-2`}>
-      {dataItemsList}
-
-      </div>
-      <Button variant="contained" onClick={onClear}>Clear</Button>
+    <div className=" d-flex align-items-center justify-content-between">
+      <div className={`${styles.wrapper} d-flex  m-2 `}>{dataItemsList}</div>
+      <Button variant="contained" className="ml-2" onClick={onClear}>
+        Clear
+      </Button>
     </div>
   );
 };

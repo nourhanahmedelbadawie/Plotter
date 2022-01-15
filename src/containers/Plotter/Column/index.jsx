@@ -1,35 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
 import Items from "../Items";
 import Columns from "../../../components/Columns";
-
-import { getColoumData} from "../../../network/method";
+import { getColoumData } from "../../../network/method";
 
 const Column = () => {
-  const PETS = [
-    { id: 1, name: "dog" },
-    { id: 2, name: "cat" },
-    { id: 3, name: "fish" },
-    { id: 4, name: "hamster" },
-  ];
+  const [columns, setColumns] = useState([]);
 
-  useEffect(()=>{
-    getColoumData()
-  },[])
+  useEffect(() => {
+    getAllColoumData();
+  }, []);
+
+  const getAllColoumData = async () => {
+    let response = await getColoumData();
+    setColumns(response.data);
+  };
+
   const setColumnsData = () => {
     return (
       <>
-      
-      {PETS.map((pet) => (
-        <Items key={pet.id} draggable id={pet.id} name={pet.name} />
-      ))}
+        {columns?.length > 0 &&
+          columns.map((column, columnId) => (
+            <Items key={columnId} draggable id={columnId} item={column} />
+          ))}
       </>
     );
   };
   return (
     <div>
-      
       <Columns dataListItems={setColumnsData()} />
-   
     </div>
   );
 };

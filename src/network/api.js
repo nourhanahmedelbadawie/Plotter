@@ -1,9 +1,5 @@
 import { axiosInstance } from "./index";
 
-export const getColoumData = async () => {
-  return await axiosInstance.get(`columns`);
-};
+export const getColoumData = () => axiosInstance.get(`columns`);
 
-export const postPlotterData = async (payload) =>
-    await axiosInstance.post(`data`, payload);
-
+export const postPlotterData = (payload) => axiosInstance.post(`data`, payload);
