@@ -13,7 +13,7 @@ const Items = ({ id, item }) => {
   });
   return (
     <ul ref={dragRef} className="d-flex alig-items-center mb-0">
-      <li className={styles.item}> {item?.name}</li>
+      <li className={`${styles.item} mx-2`}> {item?.name}</li>
       {isDragging && "+"}
     </ul>
   );

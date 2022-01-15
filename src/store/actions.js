@@ -12,16 +12,23 @@ export const addDimensionItem = (payload) => {
   };
 };
 
-export const clearDimensions = (payload) => {
+export const addDimensionMeasureGraph = (payload) => {
   return {
-    type: "CLEARDIMENSIONS",
+    type: "DIMENSIONMEASUREGRAPH",
     payload,
   };
 };
 
-export const clearMeasures = (payload) => {
+export const clearDimensionItems = (payload) => {
   return {
-    type: "CLEARDMEASURES",
+    type: "CLEARDIMENSIONITEMS",
+    payload,
+  };
+};
+
+export const clearMeasureItems = (payload) => {
+  return {
+    type: "CLEARDMEASUREITEMS",
     payload,
   };
 };

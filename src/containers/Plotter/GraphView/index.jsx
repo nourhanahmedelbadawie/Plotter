@@ -1,27 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Chart from "../../../components/Chart";
 
 import { setPlotterData } from "../../../network/method";
+import { addDimensionMeasureGraph } from "../../../store/actions";
 
 const GraphView = () => {
-  const [graphData, setGraphData] = useState(null);
+  const dispatch = useDispatch();
+
+  const [graphDataView, setGraphDataView] = useState(false);
 
   const dimensionItems = useSelector((state) => state.dimensionItems);
   const measureItems = useSelector((state) => state.measureItems);
+  const dimensionMeasureGraph = useSelector(
+    (state) => state.dimensionMeasureGraph
+  );
 
   useEffect(() => {
-    if (
-      dimensionItems?.length === measureItems?.length &&
-      dimensionItems?.length > 0
-    ) {
-      getGraphData();
-    }
+    dimensionItems?.length === measureItems?.length &&
+    dimensionItems?.length > 0
+      ? getGraphData()
+      : setGraphDataView(false);
   }, [dimensionItems, measureItems]);
 
   useEffect(() => {
     return () => {
-      setGraphData(null);
+      setGraphDataView(false);
     };
   }, []);
 
@@ -32,30 +36,67 @@ const GraphView = () => {
     };
 
     let response = await setPlotterData(payload);
-    setGraphData(response.data);
-    formateDataToChart()
+    setGraphDataView(true);
+    formateDataToChart(response.data);
   };
 
-  const formateDataToChart = () => {
-    let dataToChart = graphData[0]?.values.map((value, valueId) => {
-      return {
-        [graphData[0].name]: value,
-        [graphData[1].name]: graphData[1].values[valueId],
-      };
-    });
-    return dataToChart;
+  const formateDataToChart = (graphData) => {
+    if (
+      !dimensionMeasureGraph.some(
+        (graphElement) =>
+          graphElement.id === `${graphData[0].name + graphData[1].name}`
+      )
+    ) {
+      let dataToChart = graphData[0]?.values.map((value, valueId) => {
+        return {
+          [graphData[0].name]: value,
+          [graphData[1].name]: graphData[1].values[valueId],
+        };
+      });
+
+      dispatch(
+        addDimensionMeasureGraph({
+          dataToChart,
+          X_axisName: graphData[0].name,
+          y_axisName: graphData[1].name,
+          id: graphData[0].name + graphData[1].name,
+        })
+      );
+    } else {
+      return;
+    }
   };
 
   return (
     <div className=" my-4">
-      {graphData ? (
-        <Chart
-          dataChart={formateDataToChart()}
-          X_axisName={graphData[0].name}
-          y_axisName={graphData[1].name}
-        />
+      {graphDataView ? (
+        <>
+          {dimensionMeasureGraph?.map((graphElement, index) => (
+            <>
+              <div className="mb-2">
+                <h4>
+                  {" "}
+                  <span class="badge bg-secondary">
+                    {graphElement.X_axisName} VS {graphElement.y_axisName}{" "}
+                  </span>
+                </h4>
+                <div class="alert alert-secondary" role="alert">
+                  <p className="mb-1"> X-axis : {graphElement.X_axisName}</p>
+                  <p> Y-axis : {graphElement.y_axisName}</p>
+                </div>
+
+                <Chart
+                  dataChart={graphElement.dataToChart}
+                  X_axisName={graphElement.X_axisName}
+                  y_axisName={graphElement.y_axisName}
+                  key={index}
+                />
+              </div>
+            </>
+          ))}
+        </>
       ) : (
-        <div class="alert alert-warning" role="alert">
+        <div className="alert alert-warning" role="alert">
           You should enter equal data length
         </div>
       )}
@@ -64,36 +105,3 @@ const GraphView = () => {
 };
 
 export default GraphView;
-
-// })
-// {
-//   name: "developer 3",
-//   "name1": 5,
-//   "name2": 6,
-//   amt: 3
-// },
-// {
-//   name: "developer 4",
-//   "name1": 7,
-//   "name2": 8,
-//   amt: 4
-// },
-
-// }
-// {
-//   "name": "Product",
-//   "values": [
-//   "Diskette",
-//   "Memory Card",
-//   "HDTV Tuner",
-//   "Flat Panel Graphics Monitor",
-//   "Digital Camera",
-//   "Minitower Speaker",
-//   "Extension Cable",
-//   "Y Box"
-//   ]
-//   },
-//   {
-//   "name": "Cost",
-//   "values": [
-//   333.08,

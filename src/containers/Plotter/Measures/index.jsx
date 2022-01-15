@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
 
-import { addMeasureItem } from "../../../store/actions";
+import { addMeasureItem , clearMeasureItems } from "../../../store/actions";
 import ItemsContainer from "../../../components/ItemsContainer";
 import Items from "../Items";
 
@@ -29,7 +29,7 @@ const Measures = () => {
   });
   const clearMeasures = () => {
     setmeasure([]);
-    dispatch(clearMeasures())
+    dispatch(clearMeasureItems())
 
   };
   const setMeasuresData = () => {

@@ -3,7 +3,7 @@ import { Router, Route, Redirect, Switch } from "react-router-dom";
 
 import history from "./History";
 import { ROUTE_PATHS } from "../utils/PathNames";
-import Show from "../containers/Home";
+import Show from "../containers/Show";
 import Plotter from "../containers/Plotter";
 
 const Routes = (

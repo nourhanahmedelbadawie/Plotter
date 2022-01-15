@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDrop } from "react-dnd";
-import { useDispatch } from "react-redux";
+import { useDispatch  , useSelector} from "react-redux";
 
-import {addDimensionItem} from "../../../store/actions";
+import {addDimensionItem, clearDimensionItems } from "../../../store/actions";
 import Items from "../Items";
 import ItemsContainer from "../../../components/ItemsContainer";
 
 const Dimensions = () => {
   const [dimension, setdimension] = useState([]);
   const dispatch = useDispatch();
+  const dimensionItems = useSelector((state) => state.dimensionItems);
 
 
   useEffect(()=>{
@@ -34,8 +35,10 @@ const Dimensions = () => {
 
   const clearDimensions = () => {
     setdimension([]);
-    dispatch(clearDimensions())
+    dispatch(clearDimensionItems())
+    console.log(dimensionItems)
   };
+
   const setDimensionsData = () => {
     return (
       <>

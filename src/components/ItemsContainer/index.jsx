@@ -18,6 +18,6 @@ const ItemsContainer = ({ dataItemsList, onClear }) => {
 export default ItemsContainer;
 
 ItemsContainer.propTypes = {
-  dataItemsList: PropTypes.elementType,
+  dataItemsList: PropTypes.element,
   onClear: PropTypes.func,
 };
